@@ -72,7 +72,7 @@ namespace VType
 		/// <summary>
 		/// Indicates whether the value is iterable.
 		/// </summary>
-		public bool IsIterable => NotNull && PrimaryType!.IsAssignableFrom(typeof(IEnumerable));
+		public bool IsIterable => (NotNull) && (PrimaryType!.IsAssignableFrom(typeof(IEnumerable)) || PrimaryType!.IsAssignableFrom(typeof(Array)) || ((PrimaryType!.IsClass || !PrimaryType!.IsArray) && Properties.FirstOrDefault(q=>q.Name=="IsArray" || q.Name=="IsIterable") is not null));
 		/// <summary>
 		/// Indicates whether the object inherits from the <see cref="IEnumerable"/> interface.
 		/// </summary>
