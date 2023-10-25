@@ -6,7 +6,24 @@
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <Title>VType</Title>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>Daniel K. Valente</Authors>
+    <Company>D.O.F.T.</Company>
+    <Description>Manage Type information quickly.</Description>
+    <Copyright>Apache-2.0</Copyright>
+    <PackageProjectUrl>https://github.com/WarmasterPrime/VType</PackageProjectUrl>
+    <PackageIcon>favicon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/WarmasterPrime/VType</RepositoryUrl>
+    <PackageTags>vadvance;vtype;type;information;members;fields;methods</PackageTags>
+    <PackAsTool>True</PackAsTool>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\dvalente\Desktop\tmp\favicon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="VIteration">
