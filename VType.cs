@@ -9,7 +9,7 @@ namespace VType
 	/// <summary>
 	/// Provides immediate <see cref="Type"/> information.
 	/// </summary>
-	public class VType : Type
+	public class VType:Type
 	{
 		/// <summary>
 		/// The instance of the object.
@@ -50,7 +50,7 @@ namespace VType
 		/// <summary>
 		/// Indicates whether the value is iterable.
 		/// </summary>
-		public bool IsIterable => (NotNull) && (IsAssignableFrom(typeof(IEnumerable)) || IsAssignableFrom(typeof(Array)) || ((IsClass || !IsArray) && Properties.FirstOrDefault(q=>q.Name=="IsArray" || q.Name=="IsIterable") is not null));
+		public bool IsIterable => NotNull && (IsAssignableFrom(typeof(IEnumerable)) || IsAssignableFrom(typeof(Array)) || ((IsClass || !IsArray) && Properties.FirstOrDefault(q => q.Name=="IsArray" || q.Name=="IsIterable") is not null));
 		/// <summary>
 		/// Indicates whether the object inherits from the <see cref="IEnumerable"/> interface.
 		/// </summary>
@@ -62,7 +62,7 @@ namespace VType
 		/// <summary>
 		/// Determines if the value inherits from any numerical data-type or has a field "IsNumber" set to <see cref="bool">true</see>.
 		/// </summary>
-		public bool IsNumber => GetFields().Any(q=>q.Name=="IsNumber" && q.FieldType==typeof(bool) && ((bool)q.GetValue(Value)!)) || InheritsAny(typeof(byte), typeof(short), typeof(ushort), typeof(int), typeof(uint), typeof(long), typeof(ulong), typeof(float), typeof(decimal), typeof(double));
+		public bool IsNumber => GetFields().Any(q => q.Name=="IsNumber" && q.FieldType==typeof(bool) && ((bool)q.GetValue(Value)!)) || InheritsAny(typeof(byte), typeof(short), typeof(ushort), typeof(int), typeof(uint), typeof(long), typeof(ulong), typeof(float), typeof(decimal), typeof(double));
 		/// <summary>
 		/// The object's members.
 		/// </summary>
@@ -169,7 +169,7 @@ namespace VType
 		/// 
 		/// </summary>
 		/// <returns></returns>
-		protected override bool HasElementTypeImpl() => NotNull ? HasElementType : false;
+		protected override bool HasElementTypeImpl() => NotNull && HasElementType;
 		/// <inheritdoc cref="Type.InvokeMember(string, BindingFlags, Binder, object, object[], ParameterModifier[], CultureInfo, string[])"/>
 		public override object? InvokeMember(string name, BindingFlags invokeAttr, Binder? binder, object? target, object?[]? args, ParameterModifier[]? modifiers, CultureInfo? culture, string[]? namedParameters) => InvokeMember(name, invokeAttr, binder, target, args, modifiers, culture, namedParameters);
 		/// <summary>
@@ -177,29 +177,29 @@ namespace VType
 		/// </summary>
 		/// <returns></returns>
 		/// <exception cref="NotImplementedException"></exception>
-		protected override bool IsArrayImpl() => NotNull ? IsArray : false;
+		protected override bool IsArrayImpl() => NotNull && IsArray;
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns></returns>
 		/// <exception cref="NotImplementedException"></exception>
-		protected override bool IsByRefImpl() => NotNull ? IsByRef : false;
+		protected override bool IsByRefImpl() => NotNull && IsByRef;
 		/// <summary>
 		/// Determines if the value is a COMObject.
 		/// </summary>
 		/// <returns></returns>
 		/// <exception cref="NotImplementedException"></exception>
-		protected override bool IsCOMObjectImpl() => NotNull ? IsCOMObject : false;
+		protected override bool IsCOMObjectImpl() => NotNull && IsCOMObject;
 		/// <summary>
 		/// Determines if the value is a pointer reference.
 		/// </summary>
 		/// <returns></returns>
-		protected override bool IsPointerImpl() => NotNull ? IsPointer : false;
+		protected override bool IsPointerImpl() => NotNull && IsPointer;
 		/// <summary>
 		/// Determines if the value is primitive.
 		/// </summary>
 		/// <returns></returns>
-		protected override bool IsPrimitiveImpl() => NotNull ? IsPrimitive : false;
+		protected override bool IsPrimitiveImpl() => NotNull && IsPrimitive;
 		/// <summary>
 		/// Gets an array of custom attributes.
 		/// </summary>
@@ -220,13 +220,13 @@ namespace VType
 		/// <param name="inherit"></param>
 		/// <returns></returns>
 		/// <exception cref="NotImplementedException"></exception>
-		public override bool IsDefined(Type attributeType, bool inherit) => NotNull ? IsDefined(attributeType, inherit) : false;
+		public override bool IsDefined(Type attributeType, bool inherit) => NotNull && IsDefined(attributeType, inherit);
 		/// <summary>
 		/// Determines if the value can inherit from any of the given <paramref name="types"/>.
 		/// </summary>
 		/// <param name="types"></param>
 		/// <returns></returns>
-		public bool InheritsAny(params Type[] types) => (types??Array.Empty<Type>()).Any(q=>IsAssignableFrom(q));
+		public bool InheritsAny(params Type[] types) => (types??Array.Empty<Type>()).Any(q => IsAssignableFrom(q));
 		/// <summary>
 		/// Determines if the object instance contains a member with a matching name.
 		/// </summary>
@@ -234,20 +234,20 @@ namespace VType
 		/// <returns></returns>
 		public bool Contains(params string[] names)
 		{
-			names=names??Array.Empty<string>();
-			return Members.Any(sel=>names.Contains(sel.Name));
+			names??=Array.Empty<string>();
+			return Members.Any(sel => names.Contains(sel.Name));
 		}
 		/// <summary>
 		/// Gets a <see cref="VMember"/> array representation of the <see cref="Members"/> field.
 		/// </summary>
 		/// <returns></returns>
-		public VMember[] GetVMembers() => Members.Iterate(sel=>new VMember(sel));
+		public VMember[] GetVMembers() => Members.Iterate(sel => new VMember(sel));
 		/// <summary>
 		/// Finds the member with the matching <paramref name="name"/>.
 		/// </summary>
 		/// <param name="name">A <see cref="string"/> representation of the name of a member to find.</param>
 		/// <returns></returns>
-		public MemberInfo? FindByName(string name) => Members.FirstOrDefault(sel=>sel.Name==name);
+		public MemberInfo? FindByName(string name) => Members.FirstOrDefault(sel => sel.Name==name);
 
 	}
 }

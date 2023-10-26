@@ -5,7 +5,7 @@ namespace VType
 	/// <summary>
 	/// An advanced class of the <see cref="MemberInfo"/> class.
 	/// </summary>
-	public class VMember : MemberInfo
+	public class VMember:MemberInfo
 	{
 		/// <summary>
 		/// The current <see cref="MemberInfo"/> instance.
@@ -52,6 +52,30 @@ namespace VType
 		/// </summary>
 		public bool IsEvent => MemberType.HasFlag(MemberTypes.Event);
 		/// <summary>
+		/// The method info object.
+		/// </summary>
+		public MethodInfo? MethodInfo => IsMethod ? (MethodInfo)MInfo : null;
+		/// <summary>
+		/// The field info object.
+		/// </summary>
+		public FieldInfo? FieldInfo => IsField ? (FieldInfo)MInfo : null;
+		/// <summary>
+		/// The property info object.
+		/// </summary>
+		public PropertyInfo? PropertyInfo => IsProperty ? (PropertyInfo)MInfo : null;
+		/// <summary>
+		/// The constructor info object.
+		/// </summary>
+		public ConstructorInfo? ConstructorInfo => IsConstructor ? (ConstructorInfo)MInfo : null;
+		/// <summary>
+		/// The type info object.
+		/// </summary>
+		public TypeInfo? TypeInfo => IsTypeInfo ? (TypeInfo)MInfo : null;
+		/// <summary>
+		/// The event info object.
+		/// </summary>
+		public EventInfo? EventInfo => IsEvent ? (EventInfo)MInfo : null;
+		/// <summary>
 		/// Gets the input argument types.
 		/// </summary>
 		public Type[] InputTypes
@@ -59,12 +83,12 @@ namespace VType
 			get
 			{
 				if(IsProperty)
-					return (((PropertyInfo)MInfo).GetSetMethod()??((PropertyInfo)MInfo).GetGetMethod())?.GetParameters().Select(q=>q.ParameterType).ToArray()??Array.Empty<Type>();
+					return (PropertyInfo!.GetSetMethod()??PropertyInfo.GetGetMethod())?.GetParameters().Select(q => q.ParameterType).ToArray()??Array.Empty<Type>();
 				if(IsMethod)
-					return ((MethodInfo)MInfo).GetParameters().Select(q=>q.ParameterType).ToArray();
+					return MethodInfo!.GetParameters().Select(q => q.ParameterType).ToArray();
 				if(IsConstructor)
-					return ((ConstructorInfo)MInfo).GetParameters().Select(q=>q.ParameterType).ToArray();
-				return Array.Empty<Type>();
+					return ConstructorInfo!.GetParameters().Select(q => q.ParameterType).ToArray();
+				return IsField ? (new Type[] { FieldInfo!.FieldType }) : Array.Empty<Type>();
 			}
 		}
 		/// <summary>
@@ -75,14 +99,12 @@ namespace VType
 			get
 			{
 				if(IsField)
-					return ((FieldInfo)MInfo).FieldType;
+					return FieldInfo!.FieldType;
 				if(IsProperty)
-					return ((PropertyInfo)MInfo).GetSetMethod()?.ReturnType;
+					return PropertyInfo!.GetSetMethod()?.ReturnType;
 				if(IsMethod)
-					return ((MethodInfo)MInfo).ReturnType;
-				if(IsConstructor)
-					return ((ConstructorInfo)MInfo).GetType();
-				return null;
+					return MethodInfo!.ReturnType;
+				return IsConstructor ? ConstructorInfo!.DeclaringType : null;
 			}
 		}
 
@@ -115,6 +137,43 @@ namespace VType
 		/// <param name="inherit"></param>
 		/// <returns></returns>
 		public override bool IsDefined(Type attributeType, bool inherit) => MInfo.IsDefined(attributeType, inherit);
+		/// <inheritdoc cref="VMember(MemberInfo)"/>
+		public static implicit operator VMember(MethodInfo value) => new(value);
+		/// <inheritdoc cref="VMember(MemberInfo)"/>
+		public static implicit operator VMember(FieldInfo value) => new(value);
+		/// <inheritdoc cref="VMember(MemberInfo)"/>
+		public static implicit operator VMember(PropertyInfo value) => new(value);
+		/// <inheritdoc cref="VMember(MemberInfo)"/>
+		public static implicit operator VMember(ConstructorInfo value) => new(value);
+		/// <inheritdoc cref="VMember(MemberInfo)"/>
+		public static implicit operator VMember(TypeInfo value) => new(value);
+		/// <inheritdoc cref="VMember(MemberInfo)"/>
+		public static implicit operator VMember(EventInfo value) => new(value);
+		/// <summary>
+		/// Gets the <see cref="string"/> representation of this object.
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString() => MInfo is null ? "null" : Name + " (" + GetMemberTypeString() + ")";
+		/// <summary>
+		/// Gets the member type represented as a <see cref="string"/> value.
+		/// </summary>
+		/// <returns></returns>
+		public string GetMemberTypeString()
+		{
+			return MemberType switch
+			{
+				MemberTypes.Constructor => "ConstructorInfo",
+				MemberTypes.Field => "FieldInfo",
+				MemberTypes.Property => "PropertyInfo",
+				MemberTypes.Method => "MethodInfo",
+				MemberTypes.Event => "EventInfo",
+				MemberTypes.TypeInfo => "TypeInfo",
+				MemberTypes.Custom => "Custom",
+				MemberTypes.NestedType => "NestedType / TypeInfo",
+				MemberTypes.All => "All",
+				_ => "UNKNOWN",
+			};
+		}
 
 	}
 }
