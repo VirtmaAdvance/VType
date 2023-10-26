@@ -66,28 +66,26 @@ namespace VType
 		/// <summary>
 		/// The object's members.
 		/// </summary>
-		public MemberInfo[] Members => NotNull ? GetMembers() : Array.Empty<MemberInfo>();
+		public MemberInfo[] Members => NotNull ? this.GetAllMembers() : Array.Empty<MemberInfo>();
 		/// <summary>
 		/// The object's fields.
 		/// </summary>
-		public FieldInfo[] Fields => NotNull ? GetFields() : Array.Empty<FieldInfo>();
+		public FieldInfo[] Fields => NotNull ? this.GetAllFields() : Array.Empty<FieldInfo>();
 		/// <summary>
 		/// The object's methods.
 		/// </summary>
-		public MethodInfo[] Methods => NotNull ? GetMethods() : Array.Empty<MethodInfo>();
+		public MethodInfo[] Methods => NotNull ? this.GetAllMethods() : Array.Empty<MethodInfo>();
 		/// <summary>
 		/// The object's constructors.
 		/// </summary>
-		public ConstructorInfo[] Constructors => NotNull ? GetConstructors() : Array.Empty<ConstructorInfo>();
+		public ConstructorInfo[] Constructors => NotNull ? this.GetAllConstructors() : Array.Empty<ConstructorInfo>();
 		/// <summary>
 		/// The object's properties.
 		/// </summary>
-		public PropertyInfo[] Properties => NotNull ? GetProperties() : Array.Empty<PropertyInfo>();
+		public PropertyInfo[] Properties => NotNull ? this.GetAllProperties() : Array.Empty<PropertyInfo>();
 
 
-		/// <summary>
-		/// Creates a new instance of the <see cref="VType"/> class.
-		/// </summary>
+		/// <inheritdoc cref="VType(object)"/>
 		public VType()
 		{
 			Value=Activator.CreateInstance(typeof(object))!;
@@ -235,7 +233,7 @@ namespace VType
 		public bool Contains(params string[] names)
 		{
 			names??=Array.Empty<string>();
-			return Members.Any(sel => names.Contains(sel.Name));
+			return names.Length>0 && Members.Any(sel => names.Contains(sel.Name));
 		}
 		/// <summary>
 		/// Gets a <see cref="VMember"/> array representation of the <see cref="Members"/> field.
@@ -248,6 +246,11 @@ namespace VType
 		/// <param name="name">A <see cref="string"/> representation of the name of a member to find.</param>
 		/// <returns></returns>
 		public MemberInfo? FindByName(string name) => Members.FirstOrDefault(sel => sel.Name==name);
+		/// <summary>
+		/// Gets the <see cref="string"/> representation of this object.
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString() => Name;
 
 	}
 }
