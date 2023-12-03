@@ -8,7 +8,7 @@
     <Title>VType</Title>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>Daniel K. Valente</Authors>
-    <Company>D.O.F.T.</Company>
+    <Company>VirtmaAdvance</Company>
     <Description>Manage Type information quickly.</Description>
     <Copyright>Apache-2.0</Copyright>
     <PackageProjectUrl>https://github.com/WarmasterPrime/VType</PackageProjectUrl>
@@ -17,6 +17,9 @@
     <PackageTags>vadvance;vtype;type;information;members;fields;methods</PackageTags>
     <PackAsTool>True</PackAsTool>
     <ApplicationIcon>Virtma Logo V2.ico</ApplicationIcon>
+    <FileVersion>0.0.0.1</FileVersion>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
