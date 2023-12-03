@@ -8,10 +8,7 @@ namespace VType
 	public static class TypeSearchExt
 	{
 		/// <inheritdoc cref="FindMembersByName(Type, string, MemberTypes, BindingFlags)"/>
-		public static MemberInfo[] FindMembersByName(this Type type, string name)
-		{
-			return type.GetMember(name, MemberTypes.All, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.IgnoreCase | BindingFlags.IgnoreReturn | BindingFlags.GetProperty | BindingFlags.SetProperty | BindingFlags.CreateInstance | BindingFlags.Default | BindingFlags.DeclaredOnly | BindingFlags.DoNotWrapExceptions | BindingFlags.ExactBinding | BindingFlags.FlattenHierarchy | BindingFlags.GetField | BindingFlags.Instance | BindingFlags.InvokeMethod | BindingFlags.OptionalParamBinding | BindingFlags.PutDispProperty | BindingFlags.PutRefDispProperty | BindingFlags.SetField | BindingFlags.SuppressChangeType);
-		}
+		public static MemberInfo[] FindMembersByName(this Type type, string name) => type.GetMember(name, MemberTypes.All, VType.AllBindingFlags);
 		/// <summary>
 		/// Attempts to find a member with a given <paramref name="name"/>.
 		/// </summary>

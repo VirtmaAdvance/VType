@@ -12,25 +12,25 @@
     <Description>Manage Type information quickly.</Description>
     <Copyright>Apache-2.0</Copyright>
     <PackageProjectUrl>https://github.com/WarmasterPrime/VType</PackageProjectUrl>
-    <PackageIcon>favicon.png</PackageIcon>
+    <PackageIcon>ezgif-3-57d9c1e68a.png</PackageIcon>
     <RepositoryUrl>https://github.com/WarmasterPrime/VType</RepositoryUrl>
     <PackageTags>vadvance;vtype;type;information;members;fields;methods</PackageTags>
     <PackAsTool>True</PackAsTool>
+    <ApplicationIcon>Virtma Logo V2.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="C:\Users\dvalente\Desktop\tmp\favicon.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+    <Content Include="Virtma Logo V2.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="VIteration">
-      <HintPath>..\VIteration\bin\Release\net6.0\VIteration.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-      <Private>True</Private>
-    </Reference>
+    <None Include="C:\Users\kekoa\Downloads\ezgif-3-57d9c1e68a.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

@@ -2,15 +2,20 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
-using VIteration;
 
 namespace VType
 {
 	/// <summary>
 	/// Provides immediate <see cref="Type"/> information.
 	/// </summary>
-	public class VType:Type
+	public class VType : Type
 	{
+
+		/// <summary>
+		/// Consists of all the flag options in the <see cref="BindingFlags"/> enum.
+		/// </summary>
+		public static readonly BindingFlags AllBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.IgnoreCase | BindingFlags.IgnoreReturn | BindingFlags.GetProperty | BindingFlags.SetProperty | BindingFlags.CreateInstance | BindingFlags.Default | BindingFlags.DeclaredOnly | BindingFlags.DoNotWrapExceptions | BindingFlags.ExactBinding | BindingFlags.FlattenHierarchy | BindingFlags.GetField | BindingFlags.Instance | BindingFlags.InvokeMethod | BindingFlags.OptionalParamBinding | BindingFlags.PutDispProperty | BindingFlags.PutRefDispProperty | BindingFlags.SetField | BindingFlags.SuppressChangeType;
+
 		/// <summary>
 		/// The instance of the object.
 		/// </summary>
@@ -93,10 +98,40 @@ namespace VType
 		/// <summary>
 		/// Creates a new instance of the <see cref="VType"/> class.
 		/// </summary>
-		/// <param name="value"></param>
+		/// <param name="value">Any value that inherits from the <see cref="object"/> class (Does not have to be a <see cref="Type"/> object).</param>
 		public VType(object value)
 		{
 			Value=value;
+		}
+		/// <summary>
+		/// Checks if the current <see cref="Type"/> can be inherited from the given <paramref name="types"/>.
+		/// </summary>
+		/// <param name="types">The data-types to check against.</param>
+		/// <returns>a <see cref="bool">boolean</see> value representing if the current <see cref="Type"/> inherits, can be inherited from/by, or can be converted into the given <paramref name="types"/>.</returns>
+		public bool CanInherit(params Type[] types)
+		{
+			if(NotNull && !IsComObject)
+			{
+				types??=Array.Empty<Type>();
+				Type valueType=Value!.GetType();
+				return types.Any(q =>valueType.IsAssignableFrom(q));
+			}
+			return false;
+		}
+		/// <summary>
+		/// Determines if the given <paramref name="types"/> can inherit from the current <see cref="Type"/>.
+		/// </summary>
+		/// <param name="types">The data-types to check against.</param>
+		/// <returns>a <see cref="bool">boolean</see> value representing if the current <see cref="Type"/> inherits, can be inherited from/by, or can be converted into the given <paramref name="types"/>.</returns>
+		public bool CanExtend(params Type[] types)
+		{
+			if(NotNull && !IsComObject)
+			{
+				types??=Array.Empty<Type>();
+				Type valueType=Value!.GetType();
+				return types.Any(q =>q.IsAssignableFrom(valueType));
+			}
+			return false;
 		}
 		/// <summary>
 		/// Gets the attribute flags.
@@ -235,11 +270,6 @@ namespace VType
 			names??=Array.Empty<string>();
 			return names.Length>0 && Members.Any(sel => names.Contains(sel.Name));
 		}
-		/// <summary>
-		/// Gets a <see cref="VMember"/> array representation of the <see cref="Members"/> field.
-		/// </summary>
-		/// <returns></returns>
-		public VMember[] GetVMembers() => Members.Iterate(sel => new VMember(sel));
 		/// <summary>
 		/// Finds the member with the matching <paramref name="name"/>.
 		/// </summary>
