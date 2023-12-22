@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -10,30 +10,24 @@
     <Authors>Daniel K. Valente</Authors>
     <Company>VirtmaAdvance</Company>
     <Description>Manage Type information quickly.</Description>
-    <Copyright>Apache-2.0</Copyright>
+    <Copyright>0BSD</Copyright>
     <PackageProjectUrl>https://github.com/WarmasterPrime/VType</PackageProjectUrl>
-    <PackageIcon>ezgif-3-57d9c1e68a.png</PackageIcon>
+    <PackageIcon></PackageIcon>
     <RepositoryUrl>https://github.com/WarmasterPrime/VType</RepositoryUrl>
     <PackageTags>vadvance;vtype;type;information;members;fields;methods</PackageTags>
     <PackAsTool>True</PackAsTool>
     <ApplicationIcon>Virtma Logo V2.ico</ApplicationIcon>
     <FileVersion>0.0.0.1</FileVersion>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageLicenseExpression>0BSD</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Include="Virtma Logo V2.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="C:\Users\kekoa\Downloads\ezgif-3-57d9c1e68a.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
