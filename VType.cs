@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
 
-namespace VType
+namespace VAdvanceType
 {
 	/// <summary>
 	/// Provides immediate <see cref="Type"/> information.

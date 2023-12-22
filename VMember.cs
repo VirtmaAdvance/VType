@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace VType
+namespace VAdvanceType
 {
 	/// <summary>
 	/// An advanced class of the <see cref="MemberInfo"/> class.

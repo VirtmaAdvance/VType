@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace VType
+namespace VAdvanceType
 {
 	/// <summary>
 	/// Provides informational extension methods for the <see cref="Type"/> class.

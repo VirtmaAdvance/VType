@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace VType.Properties {
+namespace VAdvanceType.Properties {
     using System;
     
     
